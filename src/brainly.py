@@ -1,7 +1,7 @@
 import requests
 
 class Brainly:
-	def __init__(self, language: str = "ru"):
+	def __init__(self, language: str = "ru") -> None:
 		self.first_api = "https://znanija.com"
 		self.second_api = "https://srv-user-moderation.z-dn.net"
 		self.graphql_api = f"https://znanija.com/graphql/{language}"
@@ -15,7 +15,7 @@ class Brainly:
 	def login(
 			self,
 			username: str,
-			password: str):
+			password: str) -> dict:
 		data = {
 			"autologin": True,
 			"client_type": 1,
@@ -41,7 +41,7 @@ class Brainly:
 			password: str,
 			country: str = "RU",
 			account_type: str = "PARENT",
-			date_of_birth: str = "2003-03-03"):
+			date_of_birth: str = "2003-03-03") -> dict:
 		data = {
 			"operationName": "Registration",
 			"variables": {
@@ -62,17 +62,17 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_account_info(self):
+	def get_account_info(self) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_users/me",
 			headers=self.headers).json()
 
-	def get_user_profile(self, user_id: int):
+	def get_user_profile(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_user_profiles/get_by_id/{user_id}",
 			headers=self.headers).json()
 
-	def get_task_info(self, task_id: int):
+	def get_task_info(self, task_id: int) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_tasks/main_view/{task_id}",
 			headers=self.headers).json()
@@ -81,7 +81,7 @@ class Brainly:
 			self,
 			task_id: int,
 			content: str,
-			attachments: list = []):
+			attachments: list = []) -> dict:
 		data = {
 			"attachments": attachments,
 			"content": f"<p><strong>Ответ:</strong></p><p>{content}</p><p></p>",
@@ -92,7 +92,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_ticket(self, task_id: int):
+	def get_ticket(self, task_id: int) -> dict:
 		data = {
 			"device_type": 301,
 			"task_id": task_id
@@ -102,7 +102,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def remove_ticket(self, ticket_id: int):
+	def remove_ticket(self, ticket_id: int) -> dict:
 		data = {
 			"ticket_id": ticket_id
 		}
@@ -111,7 +111,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_similar_questions(self, task_id: int):
+	def get_similar_questions(self, task_id: int) -> dict:
 		data = {
 			"operationName": "SimilarQuestionQuery",
 			"variables": {
@@ -124,42 +124,42 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_day_leaders(self):
+	def get_day_leaders(self) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_global_rankings/view/0/1",
 			headers=self.headers).json()
 
-	def get_week_leaders(self):
+	def get_week_leaders(self) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_global_rankings/view/0/3",
 			headers=self.headers).json()
 
-	def get_month_leaders(self):
+	def get_month_leaders(self) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_global_rankings/view/0/5",
 			headers=self.headers).json()
 
-	def get_3_months_leaders(self):
+	def get_3_months_leaders(self) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_global_rankings/view/0/0",
 			headers=self.headers).json()
 
-	def get_user_followings(self, user_id: int):
+	def get_user_followings(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_users/followed_by/{user_id}",
 			headers=self.headers).json()
 
-	def get_user_followers(self, user_id: int):
+	def get_user_followers(self, user_id: int) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_users/followers/{user_id}",
 			headers=self.headers).json()
 
-	def follow_user(self, user_id: int):
+	def follow_user(self, user_id: int) -> dict:
 		return requests.put(
 			f"{self.first_api}/api/28/api_users/follow/{user_id}",
 			headers=self.headers).json()
 	
-	def unfollow_user(self, user_id: int):
+	def unfollow_user(self, user_id: int) -> dict:
 		return requests.delete(
 			f"{self.first_api}/api/28/api_users/unfollow/{user_id}",
 			headers=self.headers).json()
@@ -167,7 +167,7 @@ class Brainly:
 	def get_user_tasks(
 			self,
 			user_id: int,
-			limit: int = 10):
+			limit: int = 10) -> dict:
 		data = {
 			"limit": limit,
 			"user_id": user_id
@@ -177,7 +177,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def thank_answer(self, answer_id: int):
+	def thank_answer(self, answer_id: int) -> dict:
 		return requests.post(
 			f"{self.first_api}/api/28/api_responses/thank/{answer_id}",
 			headers=self.headers).json()
@@ -185,7 +185,7 @@ class Brainly:
 	def vote_answer(
 			self,
 			answer_id: int,
-			value: int):
+			value: int) -> dict:
 		data = {
 			"data": {
 				"value": value
@@ -199,7 +199,7 @@ class Brainly:
 	def get_answer_thanks(
 			self,
 			answer_id: int,
-			limit: int = 20):
+			limit: int = 20) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_thanks/get_for_answer/{answer_id}?limit={limit}",
 			headers=self.headers).json()
@@ -208,7 +208,7 @@ class Brainly:
 			self,
 			model_id: int,
 			content: str,
-			model_type_id: int = 2):
+			model_type_id: int = 2) -> dict:
 		data = {
 			"content": content,
 			"model_id": model_id,
@@ -219,7 +219,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_user_report_reasons(self):
+	def get_user_report_reasons(self) -> dict:
 		return requests.get(
 			f"{self.second_api}/v1/ru/user_report_reasons",
 			headers=self.headers).json()
@@ -228,7 +228,7 @@ class Brainly:
 			self,
 			user_id: int,
 			reason_id: int,
-			description: str = None):
+			description: str = None) -> dict:
 		data = {
 			"userId": user_id,
 			"reasonId": reason_id
@@ -238,7 +238,7 @@ class Brainly:
 		return requests.post(
 			f"{self.second_api}/v1/ru/user_reports",
 			json=data,
-			headers=self.headers)
+			headers=self.headers).json()
 
 	def get_questions(
 			self,
@@ -247,7 +247,7 @@ class Brainly:
 			feed_type: str = "PUBLIC",
 			grade_ids: list = [],
 			subject_ids: list = [],
-			before: str = None):
+			before: str = None) -> dict:
 		data = {
 			"operationName": "FeedQuestionsQuery",
 			"variables": {
@@ -266,7 +266,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_user_progress(self, user_id: int):
+	def get_user_progress(self, user_id: int) -> dict:
 		data = {
 			"operationName": "UserProgressById",
 			"variables": {
@@ -279,7 +279,7 @@ class Brainly:
 			json=data,
 			headers=self.headers).json()
 
-	def get_conversations(self, page: int = 0):
+	def get_conversations(self, page: int = 0) -> dict:
 		return requests.get(
 			f"{self.first_api}/api/28/api_messages/get_conversations/{page}",
 			headers=self.headers).json()
@@ -287,7 +287,7 @@ class Brainly:
 	def search_question(
 			self,
 			query: str,
-			limit: int = 10):
+			limit: int = 10) -> dict:
 		data = {
 			"operationName": "SearchQuestionQuery",
 			"variables": {
@@ -306,7 +306,7 @@ class Brainly:
 			content: str,
 			points: int,
 			subject_id: int,
-			attachments: list = []):
+			attachments: list = []) -> dict:
 		data = {
 			"attachments": attachments,
 			"content": content,
@@ -322,7 +322,7 @@ class Brainly:
 			self,
 			task_id: int,
 			content: str = None,
-			attachments: list = []):
+			attachments: list = []) -> dict:
 		data = {
 			"data": {
 				"attachments": attachments,
